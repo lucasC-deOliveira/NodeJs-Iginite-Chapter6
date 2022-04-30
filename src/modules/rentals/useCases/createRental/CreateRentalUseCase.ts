@@ -9,6 +9,7 @@ import { inject, injectable } from "tsyringe";
 
 
 
+
 interface IRequest {
     user_id: string;
     car_id: string;
@@ -41,7 +42,7 @@ class CreateRentalUseCase {
         const rentalOpenToUser = await this.rentalRepository.findOpenRentalByUser(user_id)
 
         if(rentalOpenToUser){
-            throw new AppError("There is a rental is progress for user!")
+            throw new AppError("There is a rental in progress for user!")
         }
 
         const dateNow = this.dateProvider.dateNow()
