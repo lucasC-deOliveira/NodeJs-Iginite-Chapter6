@@ -1,0 +1,7 @@
+
+
+class DevolutionRentalController{
+
+}
+
+export{DevolutionRentalController}
