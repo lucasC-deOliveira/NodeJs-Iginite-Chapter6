@@ -35,7 +35,7 @@ const uploadCarimagesController = new UploadCarimagesController()
 
 const uploadCarImages = multer(uploadConfig.upload("./tmp/cars"))
 
-carRoutes.post("/images", ensureAuthenticated,ensureAdmin,uploadCarImages.array("images"),uploadCarimagesController.handle)  
+carRoutes.post("/images/:id", ensureAuthenticated,ensureAdmin,uploadCarImages.array("images"),uploadCarimagesController.handle)  
 
 
 export {carRoutes}

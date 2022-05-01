@@ -47,6 +47,7 @@ class Car {
     @CreateDateColumn()
     created_at: Date;
     
+    
 
     constructor(){
         if(!this.id){

@@ -3,7 +3,7 @@ import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 
 
-@Entity('car_image')
+@Entity('cars_image')
 class CarImage{
 
     @PrimaryColumn()
@@ -16,7 +16,7 @@ class CarImage{
     image_name: string;
 
     @CreateDateColumn()
-    createdAt: Date;
+    createAt: Date;
 
 
     constructor(){
