@@ -42,7 +42,7 @@ app.use(
     });
 })
 
-console.log("passou aqui")
+
 
 
 export {app}

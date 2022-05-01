@@ -20,7 +20,7 @@ class CreateRentalController{
             user_id:id
         })
 
-        console.log(new Date().toDateString())
+      
 
         return response.status(201).json(rental);
 
