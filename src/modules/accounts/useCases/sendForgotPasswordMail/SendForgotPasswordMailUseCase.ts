@@ -6,7 +6,7 @@ import { IMailProvider } from "@shared/container/providers/mailProvider/IMailPro
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 import {v4 as uuid} from "uuid"
-
+import {resolve} from "node:path"
 @injectable()
 class SendforgotPassowordMailUsecase{
 
@@ -28,6 +28,8 @@ class SendforgotPassowordMailUsecase{
             throw new AppError("User does not exists")
         }
 
+        const templatePath = resolve(__dirname,"..","..","views","emails","forgotPassword.hbs")
+
         const token = uuid()
 
         const expires_date = this.dateProvider.addHours(3)
@@ -38,8 +40,11 @@ class SendforgotPassowordMailUsecase{
             expires_date:expires_date 
         })
 
-
-        await this.mailProvider.sendMail(email,"Recuperação de senha", `O link para o reset é ${token}`)
+        const variables ={
+            name: user.name,
+            link:`${process.env.FORGOT_MAIL_URL}${token}`
+        }
+        await this.mailProvider.sendMail(email,"Recuperação senha",variables,templatePath)
     }
 
 }
