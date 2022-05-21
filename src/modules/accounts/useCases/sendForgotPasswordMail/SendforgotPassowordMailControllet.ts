@@ -12,7 +12,7 @@ class SendforgotPassowordMailController{
 
         await sendforgotPassowordMailUsecase.execute(email)
 
-        throw new Error('not yet')
+     return response.send()
     }
 }
 
