@@ -1,7 +1,7 @@
 import auth from "@config/auth"
 import { UserTokens } from "@modules/accounts/infra/typeorm/entities/UserTokens"
 import { UsersTokensRepository } from "@modules/accounts/infra/typeorm/repositories/UsersTokenRepository"
-import { IDateProvider } from "@shared/container/providers/dateProvider/IDateProvidets"
+import { IDateProvider } from "@shared/container/providers/dateProvider/IDateProvider"
 import { AppError } from "@shared/errors/AppError"
 import { verify, sign } from "jsonwebtoken"
 import { inject, injectable } from "tsyringe"

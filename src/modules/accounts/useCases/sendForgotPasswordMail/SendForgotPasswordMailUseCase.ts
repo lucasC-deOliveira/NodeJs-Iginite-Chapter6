@@ -1,12 +1,12 @@
 import { UsersTokensRepository } from "@modules/accounts/infra/typeorm/repositories/UsersTokenRepository";
 import { IUserRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
-import { IDateProvider } from "@shared/container/providers/dateProvider/IDateProvidets";
 import { IMailProvider } from "@shared/container/providers/mailProvider/IMailProvider";
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 import {v4 as uuid} from "uuid"
 import {resolve} from "node:path"
+import { IDateProvider } from "@shared/container/providers/dateProvider/IDateProvider";
 @injectable()
 class SendforgotPassowordMailUsecase{
 

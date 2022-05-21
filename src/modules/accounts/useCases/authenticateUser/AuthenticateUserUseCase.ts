@@ -5,7 +5,8 @@ import { sign } from "jsonwebtoken"
 import { AppError } from "@shared/errors/AppError"
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository"
 import auth from "@config/auth"
-import { IDateProvider } from "@shared/container/providers/dateProvider/IDateProvidets"
+import { IDateProvider } from "@shared/container/providers/dateProvider/IDateProvider"
+
 
 
 interface IRequest {

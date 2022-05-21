@@ -4,10 +4,10 @@ import { AppError } from "@shared/errors/AppError"
 import { CreateRentalUseCase } from "./CreateRentalUseCase"
 import dayjs from "dayjs"
 import { DayjsDateProvider } from "@shared/container/providers/dateProvider/implementations/DayJsDateProvider"
-import { IDateProvider } from "@shared/container/providers/dateProvider/IDateProvidets"
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository"
 import { CarsRepository } from "@modules/cars/infra/typeorm/repositories/CarsRepository"
 import { CarsRepositoryInMemory } from "@modules/cars/repositories/in-memory/CarsRepositoryInMemory"
+import { IDateProvider } from "@shared/container/providers/dateProvider/IDateProvider"
 
 
 
