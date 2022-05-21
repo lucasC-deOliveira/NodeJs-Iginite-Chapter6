@@ -1,8 +1,11 @@
 import { inject, injectable } from "tsyringe"
 import { IUserRepository } from "../../repositories/IUsersRepository"
-import {compare} from "bcryptjs"
+import { compare } from "bcryptjs"
 import { sign } from "jsonwebtoken"
 import { AppError } from "@shared/errors/AppError"
+import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository"
+import auth from "@config/auth"
+import { IDateProvider } from "@shared/container/providers/dateProvider/IDateProvidets"
 
 
 interface IRequest {
@@ -10,12 +13,13 @@ interface IRequest {
     password: string
 }
 
-interface IResponse{
+interface IResponse {
     user: {
-        name:string,
-        email:string
+        name: string,
+        email: string
     },
-    token:string
+    token: string
+    refresh_token: string;
 }
 
 @injectable()
@@ -23,38 +27,63 @@ class AuthenticateUserUseCase {
 
     constructor(
         @inject("UsersRepository")
-        private usersRepository: IUserRepository
+        private usersRepository: IUserRepository,
+
+        @inject("UsersTokensRepository")
+        private usersTokensRepository: IUsersTokensRepository,
+
+        @inject("DayjsDateProvider")
+        private dayjsDateProvider: IDateProvider
     ) { }
 
-    async execute({ email, password }: IRequest) : Promise<IResponse>{
+    async execute({ email, password }: IRequest): Promise<IResponse> {
+
+        const { expires_in_token, secret_refresh_token, secret_token, expires_in_refresh_token, expires_refresh_token_days } = auth
+
         //user exists
         const user = await this.usersRepository.findByEmail(email)
-        if(!user){
+        if (!user) {
             throw new AppError("Email or password incorrect!")
         }
         // is wrong password
         const passwordMatch = await compare(password, user.password);
-        if(!passwordMatch){
+        if (!passwordMatch) {
             throw new AppError("Email or password incorrect!")
         }
 
         //generate webtoken
-        const token= sign({},"56adc43c44d0ca3e703caba325517545",{
+        const token = sign({}, secret_token, {
             subject: user.id,
-            expiresIn: "1d"
+            expiresIn: expires_in_token
         })
-        
 
-        const tokenReturn:IResponse = {
-            user:{
-                name:user.name,
-                email:user.email},
-                token
+        const refresh_token = sign({ email }, secret_refresh_token, {
+            subject: user.id,
+            expiresIn: expires_in_refresh_token
+        })
+
+
+        const refresh_token_expires_date = this.dayjsDateProvider.addDays(expires_refresh_token_days)
+
+        await this.usersTokensRepository.create({
+            expires_date: refresh_token_expires_date,
+            user_id: user.id,
+            refresh_token
+        })
+
+
+        const tokenReturn: IResponse = {
+            user: {
+                name: user.name,
+                email: user.email
+            },
+            token,
+            refresh_token
 
         }
 
         return tokenReturn
-        
+
     }
 }
 

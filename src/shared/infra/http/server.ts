@@ -2,4 +2,4 @@
 
 import {app} from "./app"
 
-app.listen(3333, () => console.log("Server Rodando"))
+app.listen(3334, () => console.log("Server Rodando"))
