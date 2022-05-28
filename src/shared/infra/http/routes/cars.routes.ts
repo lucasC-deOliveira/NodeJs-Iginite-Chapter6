@@ -33,7 +33,7 @@ carRoutes.post('/specifications/:id',ensureAuthenticated,createCarSpecificationC
 const uploadCarimagesController = new UploadCarimagesController()
 
 
-const uploadCarImages = multer(uploadConfig.upload("./tmp/cars"))
+const uploadCarImages = multer(uploadConfig)
 
 carRoutes.post("/images/:id", ensureAuthenticated,ensureAdmin,uploadCarImages.array("images"),uploadCarimagesController.handle)  
 
